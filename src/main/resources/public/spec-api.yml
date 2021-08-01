@@ -1,0 +1,49 @@
+swagger: "2.0"
+info:
+  description: This is a project to querying hills using various criteria
+  version: 1.0.0
+  title: Hills Query Service
+basePath: /v1
+schemes:
+  - http
+paths:
+  /hills:
+    get:
+      summary: Find matching hills corresponding to query
+      description: Find matching hills corresponding to query
+      operationId: getHillsInfo
+      produces:
+        - application/json
+      parameters:
+        - name: category
+          in: query
+          description: Personal access token provided to the customer by bank for authentication
+          required: false
+          type: "array"
+          items:
+            type: "string"
+          default: Munro, Munro Top
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Hill"
+
+definitions:
+  Hill:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the hill
+      height:
+        type: number
+        description: Height of the hill
+      category:
+        type: string
+        description: Hill Category
+      grid_ref:
+        type: string
+        description: Grid reference

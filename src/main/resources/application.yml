@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+application:
+  ref-data-file: munrotab.csv
+
+management:
+  endpoint:
+    info:
+      enabled: true
+    loggers:
+      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,loggers,env,prometheus
+
+info:
+  app:
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+    encoding: @project.build.sourceEncoding@
+    java:
+      version: @java.version@
