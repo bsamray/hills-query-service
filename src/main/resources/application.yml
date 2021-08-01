@@ -2,7 +2,7 @@ server:
   port: 8080
 
 application:
-  ref-data-file: munrotab.csv
+  ref-data-file: munrotab_v6.2.csv
 
 management:
   endpoint:
