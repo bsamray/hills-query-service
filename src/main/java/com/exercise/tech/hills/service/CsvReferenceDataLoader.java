@@ -2,7 +2,6 @@ package com.exercise.tech.hills.service;
 
 import com.exercise.tech.hills.model.HillInfo;
 import com.opencsv.bean.CsvToBeanBuilder;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +13,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-@Slf4j
 @Service
 public class CsvReferenceDataLoader implements ReferenceDataLoader {
 
