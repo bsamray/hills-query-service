@@ -8,7 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,9 +30,12 @@ public class HillsController {
     private Mapper mapper;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HillInfoDto>> getHillsInfo(@RequestParam (name = "cat") List<String> category) {
+    public ResponseEntity<List<HillInfoDto>> getHillsInfo(
+            @RequestParam (name = "cat", required = false) List<String> category,
+            @RequestParam(name="sort", required = false) String sortBy,
+            @RequestParam(name="order", required = false) String order) {
         log.debug("Received request to retrieve hills data by: ");
-        List<HillInfo> hillInfoList = hillsService.getHillsInfo(category);
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(category, sortBy, order);
 
         List<HillInfoDto> hillInfoDtos = hillInfoList.stream()
                 .map(hillInfo -> mapper.mapHillToDto(hillInfo))

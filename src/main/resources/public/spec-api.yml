@@ -17,12 +17,32 @@ paths:
       parameters:
         - name: category
           in: query
-          description: Personal access token provided to the customer by bank for authentication
+          description: Hill category
           required: false
           type: "array"
           items:
             type: "string"
-          default: Munro, Munro Top
+            enum:
+              - MUN
+              - TOP
+        - name: sortBy
+          in: query
+          description: Sort criteria
+          required: false
+          type: "array"
+          items:
+            type: "string"
+            enum:
+              - HEIGHT
+              - NAME
+        - name: order
+          in: query
+          description: Ascending or descending order
+          required: false
+          type: "string"
+          enum:
+            - ASC
+            - DESC
       responses:
         200:
           description: "successful operation"

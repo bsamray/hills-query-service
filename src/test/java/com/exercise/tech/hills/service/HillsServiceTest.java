@@ -24,23 +24,36 @@ public class HillsServiceTest {
     HillsRepository hillsRepository;
 
     @Test
-    public void testReturnsHillsInfoByCategoryNoInput() {
+    public void testGetHillsNoCategoryAndDescHeight() {
         List<HillInfo> input = TestUtils.getHillInfoList();
-        when(hillsRepository.getHillsByCategory(QueryHelper.getDefaultCategories())).thenReturn(input);
+        when(hillsRepository.filter(QueryHelper.getDefaultCategories())).thenReturn(input);
+        when(hillsRepository.sort(input, "HEIGHT", "DESC")).thenReturn(input);
 
-        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of());
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of(), "HEIGHT", "DESC");
+
+        assertEquals(5, hillInfoList.size());
+    }
+
+    @Test
+    public void testGetHillsSingleCategory() {
+        List<HillInfo> input = List.of(TestUtils.getHillInfo());
+        when(hillsRepository.filter(List.of("MUN"))).thenReturn(input);
+        when(hillsRepository.sort(input, "NAME", "")).thenReturn(input);
+
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of("MUN"), "NAME", "");
 
         assertEquals(input.size(), hillInfoList.size());
     }
 
+
     @Test
-    public void testReturnsHillsInfoByCategorySingleInput() {
-        List<HillInfo> input = List.of(TestUtils.getHillInfo());
-        when(hillsRepository.getHillsByCategory(List.of("MUN"))).thenReturn(input);
+    public void testGetHillsNoCategoryAndAscHeight() {
+        List<HillInfo> input = TestUtils.getHillInfoList();
+        when(hillsRepository.filter(QueryHelper.getDefaultCategories())).thenReturn(input);
 
-        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of("MUN"));
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of(), "", "");
 
-        assertEquals(input.size(), hillInfoList.size());
+        assertEquals(5, hillInfoList.size());
     }
 
 }

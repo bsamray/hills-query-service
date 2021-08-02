@@ -19,14 +19,9 @@ public class MapperTest {
 
         assertNotNull(hillInfoDto);
         assertEquals(hillInfo.getName(), hillInfoDto.getName());
-        assertEquals(mapper.mapToReadableCategory(hillInfo.getPost1997()), hillInfoDto.getCategory());
+        assertEquals(hillInfo.getPost1997(), hillInfoDto.getCategory());
         assertEquals(hillInfo.getHeightInMetres(), hillInfoDto.getHeightInMetres());
         assertEquals(hillInfo.getGridRef(), hillInfoDto.getGridRef());
     }
 
-    @Test
-    public void testMappingCategory() {
-        assertEquals("Munro", new Mapper().mapToReadableCategory("MUN"));
-        assertEquals("Munro Top", new Mapper().mapToReadableCategory("TOP"));
-    }
 }

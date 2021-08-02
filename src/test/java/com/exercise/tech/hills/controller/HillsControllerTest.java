@@ -17,6 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 
@@ -33,13 +34,13 @@ public class HillsControllerTest {
     Mapper mapper;
 
     @Test
-    public void testGetHillsByCategory() {
+    public void testFilterByCategory() {
         HillInfo hillInfo = TestUtils.getHillInfo();
         HillInfoDto hillInfoDto = TestUtils.getHillInfoDto();
-        when(hillsServiceInterface.getHillsInfo(anyList())).thenReturn(List.of(hillInfo));
+        when(hillsServiceInterface.getHillsInfo(anyList(), anyString(), anyString())).thenReturn(List.of(hillInfo));
         when(mapper.mapHillToDto(hillInfo)).thenReturn(hillInfoDto);
 
-        ResponseEntity<List<HillInfoDto>> hills = hillsController.getHillsInfo(List.of("MUN"));
+        ResponseEntity<List<HillInfoDto>> hills = hillsController.getHillsInfo(List.of("MUN"), "", "");
 
         assertNotNull(hills.getBody());
         assertEquals(1, hills.getBody().size());

@@ -18,8 +18,13 @@ public class HillsService implements HillsServiceInterface {
     private HillsRepository hillsRepository;
 
     @Override
-    public List<HillInfo> getHillsInfo(List<String> categories) {
-        return hillsRepository.getHillsByCategory(defaultCategoryIfNeeded(categories));
+    public List<HillInfo> getHillsInfo(List<String> categories, String sortBy, String order) {
+        logger.debug("Received request to get hills info");
+        List<HillInfo> hillInfoList = hillsRepository.filter(defaultCategoryIfNeeded(categories));
+        if (!"".equals(sortBy)) {
+            return hillsRepository.sort(hillInfoList, sortBy, order);
+        }
+        return hillInfoList;
     }
 
     private List<String> defaultCategoryIfNeeded(List<String> categories) {

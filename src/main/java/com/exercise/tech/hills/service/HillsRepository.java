@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface HillsRepository {
 
-    List<HillInfo> getHillsByCategory(List<String> categories);
+    List<HillInfo> filter(List<String> categories);
+
+    List<HillInfo> sort(List<HillInfo> hills, String sortBy, String order);
 
 }
