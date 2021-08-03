@@ -28,12 +28,15 @@ public class HillsRepositoryTest {
         List<HillInfo> hillInfoList = TestUtils.getHillInfoList();
         when(hillInfoDataSource.getHills()).thenReturn(hillInfoList);
 
-        List<HillInfo> hillsByCategory = hillsRepository.filter(List.of("MUN", "TOP"));
+        List<HillInfo> hillsByCategory = hillsRepository.filter(List.of("MUN", "TOP"), 2, 1000.4, 1000.2);
 
-        assertEquals(3, hillsByCategory.size());
-        assertTrue(List.of("MUN", "TOP").contains(hillsByCategory.get(0).getPost1997()));
-        assertTrue(List.of("MUN", "TOP").contains(hillsByCategory.get(1).getPost1997()));
-        assertTrue(List.of("MUN", "TOP").contains(hillsByCategory.get(2).getPost1997()));
+        assertEquals(2, hillsByCategory.size());
+        assertTrue(List.of(1000.2, 1000.3).contains(hillsByCategory.get(0).getHeightInMetres()));
+        assertTrue(List.of(1000.2, 1000.3).contains(hillsByCategory.get(1).getHeightInMetres()));
+//        assertTrue(List.of("MUN", "TOP").contains(hillsByCategory.get(0).getPost1997()));
+//        assertTrue(List.of(1).contains(hillsByCategory.get(0).getHeightInMetres()));
+//        assertTrue(List.of("MUN", "TOP").contains(hillsByCategory.get(1).getPost1997()));
+//        assertTrue(List.of("MUN", "TOP").contains(hillsByCategory.get(1).getPost1997()));
     }
 
     @Test
@@ -41,10 +44,11 @@ public class HillsRepositoryTest {
         List<HillInfo> hillInfoList = TestUtils.getHillInfoList();
         when(hillInfoDataSource.getHills()).thenReturn(hillInfoList);
 
-        List<HillInfo> hillsByCategory = hillsRepository.filter(List.of("MUN"));
+        List<HillInfo> hillsByCategory = hillsRepository.filter(List.of("MUN"), 10, 1000.4, 1000.2);
 
-        assertEquals(2, hillsByCategory.size());
+        assertEquals(1, hillsByCategory.size());
         assertEquals("MUN", hillsByCategory.get(0).getPost1997());
+        assertEquals(1000.3, hillsByCategory.get(0).getHeightInMetres());
     }
 
     @Test

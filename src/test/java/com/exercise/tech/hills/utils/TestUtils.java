@@ -43,7 +43,7 @@ public class TestUtils {
 
     public static List<HillInfo> getHillInfoList() {
         HillInfo hillInfo2 = TestUtils.getHillInfo("name2", "TOP", "grid2", 1000.2);
-        HillInfo hillInfo4 = TestUtils.getHillInfo("name4", "  ", "grid4", 1000.4);
+        HillInfo hillInfo4 = TestUtils.getHillInfo("name4", null, "grid4", 1000.4);
         HillInfo hillInfo1 = TestUtils.getHillInfo("name1", "MUN", "grid1", 1000.1);
         HillInfo hillInfo3 = TestUtils.getHillInfo("name3", "MUN", "grid3", 1000.3);
         HillInfo hillInfo5 = TestUtils.getHillInfo("name5", "", "grid5", 1000.5);

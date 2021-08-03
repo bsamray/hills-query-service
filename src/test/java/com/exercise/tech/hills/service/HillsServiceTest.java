@@ -26,10 +26,11 @@ public class HillsServiceTest {
     @Test
     public void testGetHillsNoCategoryAndDescHeight() {
         List<HillInfo> input = TestUtils.getHillInfoList();
-        when(hillsRepository.filter(QueryHelper.getDefaultCategories())).thenReturn(input);
+        when(hillsRepository.filter(QueryHelper.getDefaultCategories(), 10, 1000.0, 1000.0))
+                .thenReturn(input);
         when(hillsRepository.sort(input, "HEIGHT", "DESC")).thenReturn(input);
 
-        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of(), "HEIGHT", "DESC");
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of(), "HEIGHT", "DESC", 10, 1000.0, 1000.0);
 
         assertEquals(5, hillInfoList.size());
     }
@@ -37,10 +38,21 @@ public class HillsServiceTest {
     @Test
     public void testGetHillsSingleCategory() {
         List<HillInfo> input = List.of(TestUtils.getHillInfo());
-        when(hillsRepository.filter(List.of("MUN"))).thenReturn(input);
+        when(hillsRepository.filter(List.of("MUN"), 10, 1000.6, 1000.0)).thenReturn(input);
         when(hillsRepository.sort(input, "NAME", "")).thenReturn(input);
 
-        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of("MUN"), "NAME", "");
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of("MUN"), "NAME", "", 10, 1000.6, 1000.0);
+
+        assertEquals(input.size(), hillInfoList.size());
+    }
+
+    @Test
+    public void testGetHillsUsesDoubleMaxAsDefaultValue() {
+        List<HillInfo> input = List.of(TestUtils.getHillInfo());
+        when(hillsRepository.filter(List.of("MUN"), 10, Double.MAX_VALUE, 1000.0)).thenReturn(input);
+        when(hillsRepository.sort(input, "NAME", "")).thenReturn(input);
+
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of("MUN"), "NAME", "", 10, 0, 1000.0);
 
         assertEquals(input.size(), hillInfoList.size());
     }
@@ -49,9 +61,9 @@ public class HillsServiceTest {
     @Test
     public void testGetHillsNoCategoryAndAscHeight() {
         List<HillInfo> input = TestUtils.getHillInfoList();
-        when(hillsRepository.filter(QueryHelper.getDefaultCategories())).thenReturn(input);
+        when(hillsRepository.filter(QueryHelper.getDefaultCategories(), 10, 1000.0, 1000.0)).thenReturn(input);
 
-        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of(), "", "");
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(List.of(), "", "", 10, 1000.0, 1000.0);
 
         assertEquals(5, hillInfoList.size());
     }

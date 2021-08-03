@@ -32,10 +32,14 @@ public class HillsController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HillInfoDto>> getHillsInfo(
             @RequestParam (name = "cat", required = false) List<String> category,
-            @RequestParam(name="sort", required = false) String sortBy,
-            @RequestParam(name="order", required = false) String order) {
+            @RequestParam(name="sort", defaultValue = "", required = false) String sortBy,
+            @RequestParam(name="order", defaultValue = "", required = false) String order,
+            @RequestParam(name="limit", defaultValue = "0", required = false) int limit,
+            @RequestParam(name="max_ht", defaultValue = "0", required = false) double maxHeight,
+            @RequestParam(name="min_ht", defaultValue = "0", required = false) double minHeight) {
         log.debug("Received request to retrieve hills data by: ");
-        List<HillInfo> hillInfoList = hillsService.getHillsInfo(category, sortBy, order);
+
+        List<HillInfo> hillInfoList = hillsService.getHillsInfo(category, sortBy, order, limit, maxHeight, minHeight);
 
         List<HillInfoDto> hillInfoDtos = hillInfoList.stream()
                 .map(hillInfo -> mapper.mapHillToDto(hillInfo))

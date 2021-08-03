@@ -1,5 +1,6 @@
 package com.exercise.tech.hills.service;
 
+import com.exercise.tech.hills.exception.ReferenceDataLoadException;
 import com.exercise.tech.hills.model.HillInfo;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.slf4j.Logger;
@@ -29,12 +30,20 @@ public class CsvReferenceDataLoader implements ReferenceDataLoader {
         InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         BufferedReader reader = new BufferedReader(streamReader);
 
-        return new CsvToBeanBuilder(reader)
+        List<HillInfo> hillInfoList = new CsvToBeanBuilder(reader)
                 .withType(HillInfo.class)
                 .withSkipLines(1)
                 .withIgnoreLeadingWhiteSpace(true)
                 .build()
                 .parse();
+
+        if (hillInfoList.isEmpty()) {
+            logger.error("Empty CSV found during load");
+            throw new ReferenceDataLoadException("Empty CSV found during load");
+        }
+
+        logger.info("CSV with hill data read successfully with ({}) records", hillInfoList.size());
+        return hillInfoList;
     }
 
 }

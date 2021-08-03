@@ -20,10 +20,16 @@ public class HillsRepositoryImpl implements HillsRepository {
     private HillInfoDataSource hillInfoDataSource;
 
     @Override
-    public List<HillInfo> filter(List<String> categories) {
-        logger.debug("Filtering by categories: ({})", categories.toString());
-        return hillInfoDataSource.getHills().parallelStream()
-                .filter(hillInfo -> categories.contains(hillInfo.getPost1997()))
+    public List<HillInfo> filter(List<String> categories, int limit, double maxHeight, double minHeight) {
+        logger.debug("Filtering by criteria: categories ({}) limit ({}) maxHeight ({}) minHeight ({})",
+                categories.toString(), limit, maxHeight, minHeight);
+        List<HillInfo> hillInfoList = hillInfoDataSource.getHills();
+        return hillInfoList.stream()
+                .filter(hillInfo -> hillInfo.getPost1997() != null &&
+                        categories.contains(hillInfo.getPost1997()) &&
+                        hillInfo.getHeightInMetres() >= minHeight &&
+                        hillInfo.getHeightInMetres() <= maxHeight)
+                .limit(limit > 0 ? limit : hillInfoList.size())
                 .collect(Collectors.toList());
     }
 

@@ -1,5 +1,6 @@
 package com.exercise.tech.hills.service;
 
+import com.exercise.tech.hills.exception.ReferenceDataLoadException;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -28,6 +29,22 @@ public class ReferenceDataLoaderTest {
         ReflectionTestUtils.setField(referenceDataLoader, "fileName", "munro_bad.csv");
 
         assertThrows(RuntimeException.class, () -> referenceDataLoader.load());
+    }
+
+    @Test
+    public void testPriceChartLoadErrorsWhenFileWithHeaderOnly() {
+        referenceDataLoader = new CsvReferenceDataLoader();
+        ReflectionTestUtils.setField(referenceDataLoader, "fileName", "munro_headeronly.csv");
+
+        assertThrows(ReferenceDataLoadException.class, () -> referenceDataLoader.load());
+    }
+
+    @Test
+    public void testPriceChartLoadErrorsWhenEmptyFile() {
+        referenceDataLoader = new CsvReferenceDataLoader();
+        ReflectionTestUtils.setField(referenceDataLoader, "fileName", "munro_empty.csv");
+
+        assertThrows(ReferenceDataLoadException.class, () -> referenceDataLoader.load());
     }
 
 }
