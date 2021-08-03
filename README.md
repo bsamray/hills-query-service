@@ -11,6 +11,9 @@ resources/public/spec-api.yml
 
 This specification can also be accessed when the service is running at the /spec-api.yml 
 endpoint (e.g. http://localhost:8080/spec-api.yml)
+Sample query for the application when running is given below:
+
+http://localhost:8080/v1/hills?sort=NAME&order=ASC&limit=10&min_ht=3200&max_ht=3500
 
 ## Installation
 
@@ -85,7 +88,7 @@ http://localhost:8080/actuator/info
 ```
 Application Information
 ```
-http://localhost:8080/actuator/info
+    http://localhost:8080/actuator/info
 
 ```
 Application loggers

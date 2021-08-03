@@ -17,6 +17,7 @@
 		<java.version>11</java.version>
 		<spring.version>2.5.3</spring.version>
 		<lombok.version>1.18.16</lombok.version>
+		<opencsv.version>4.0</opencsv.version>
 	</properties>
 	<dependencies>
 
@@ -30,6 +31,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>${opencsv.version}</version>
 		</dependency>
 
 		<dependency>
